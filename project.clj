@@ -7,7 +7,8 @@
                  [ring/ring-defaults "0.2.1"]
                  [clj-postgresql "0.4.0"]
                  [enlive "1.1.6"]
-                 [hiccup "1.0.5"]]
+                 [hiccup "1.0.5"]
+                 [lib-noir "0.9.9"]]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler theprofiler.handler/app
          :auto-reload? true

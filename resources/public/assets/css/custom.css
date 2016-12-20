@@ -2,10 +2,51 @@ body {
 	background-color:#00b3fe;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .panel-red {
 	padding:5px;
 	text-align: center;
 	background-color: red;
 	color:#000000;
 	border-radius: 10px;
+}
+
+#searchf {
+	margin-top:100px;
+	text-align: center;
+}
+
+.p-class {
+	border-radius:10px;
+	border:1px solid #384452;
+	background-color:#384452;
+	margin-bottom: 10px;
+	padding: 5px;
+}
+
+.profilet span {
+	float:left;
+	clear:left;
+}
+
+.profile-panel a {
+	display: block;
+	color:#ffffff;
+}
+
+.profile-panel a:hover {
+	color:#c9c9c9;
+}
+
+#profile {
+	margin-top:100px;
+	border:1px solid #384452;
+	background-color:#384452;
+	color:#ffffff;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 700;
+	border-radius: 5px;
 }
