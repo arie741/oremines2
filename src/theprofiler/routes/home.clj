@@ -15,18 +15,23 @@
 
 (defsnippet profilet "../resources/public/profilethumb.html"
   [:div.profile-panel]
-  [image pname age id]
-  [:span.profileimg] (html/html-content image)
+  [image pname age case id]
+  [:img.profileimg] (html/set-attr :src image)
   [:span.name] (html/html-content pname)
   [:span.age] (html/html-content age)
+  [:span.case] (html/html-content case)
   [:a.plink] (html/set-attr :href (str "/profile/" id)))
 
 (defn profilepanels [profiles]
-  (map #(profilet (:photos %) (:name %) (:age %) (:uuid %)) profiles))
+  (map #(profilet (:profilephoto %) (:name %) (:age %) (:case %) (:uuid %)) profiles))
+
+(defn photosimage [vec]
+  (apply str (map #(hc/html [:a {:href %}
+                              [:img {:src % :width "200px" :height "200px" :class "profphotos"}]]) vec)))
 
 (defsnippet profilep "../resources/public/profile.html"
   [:div#profile]
-  [nama umur alamat kasus job org id photos]
+  [nama umur alamat kasus job org id photos pimage]
   [:li.pname] (html/append nama)
   [:li.pumur] (html/append (str umur))
   [:li.palamat] (html/append alamat)
@@ -34,7 +39,9 @@
   [:li.pjob] (html/append job)
   [:li.porg] (html/append org)
   [:li.pid] (html/append (str id))
-  [:li.pphotos] (html/append photos))
+  [:div.pphotos] (html/html-content (photosimage photos))
+  [:div.photost] (html/append (str "( " (count photos) " )"))
+  [:img.pimage] (html/set-attr :src pimage))
 
 (deftemplate indexpage "../resources/public/index.html"
   [snippet & profiles]
@@ -79,10 +86,11 @@
           pjob (apply :job (db/searchid (str id)))
           porg (apply :organisation (db/searchid (str id)))
           uuid (apply :uuid (db/searchid (str id)))
-          pphotos (apply :photos (db/searchid (str id)))]
-      (indexpage (profilep pnama pumur palamat pkasus pjob porg uuid pphotos) '())))
+          pphotos (read-string (apply :photos (db/searchid (str id))))
+          pimage (apply :profilephoto (db/searchid (str id)))]
+      (indexpage (profilep pnama pumur palamat pkasus pjob porg uuid pphotos pimage) '())))
   (GET "/session" request
-    (str (session/get :username)))
+    (str request))
   (GET "/logout" []
     (do 
       (session/clear!)

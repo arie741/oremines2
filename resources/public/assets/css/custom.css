@@ -6,6 +6,21 @@ ul {
   list-style-type: none;
 }
 
+.center {
+	margin-right:auto;
+	margin-left:auto;
+	display:block;
+}
+
+.btn-black {
+	background-color: #384452;
+	color:#fff;
+}
+
+.btn-black:hover {
+	color:#00b3fe;
+}
+
 .panel-red {
 	padding:5px;
 	text-align: center;
@@ -49,4 +64,17 @@ ul {
 	font-family: 'Raleway', sans-serif;
 	font-weight: 700;
 	border-radius: 5px;
+	padding:10px;
+}
+
+.pimage {
+	margin-bottom:20px;
+}
+
+.profphotos {
+	margin:10px;
+}
+
+.photost {
+	font-size:24px;
 }
