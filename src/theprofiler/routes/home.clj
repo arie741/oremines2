@@ -4,9 +4,15 @@
     [compojure.route :as route]
     [net.cgrand.enlive-html :refer [deftemplate defsnippet] :as html]
     [hiccup.core :as hc]
-    [ring.util.anti-forgery :refer [anti-forgery-field]]
     [theprofiler.db :as db]
-    [noir.session :as session]))
+    [noir.session :as session]
+    [noir.io :as io]))
+
+;;helper functions
+
+(defn uuid [] (str (java.util.UUID/randomUUID)))
+
+;;templates
 
 (defsnippet searchform "../resources/public/search.html"
   [:div#searchf]
@@ -60,6 +66,10 @@
   [:div#content] (html/content (login))
   [:div#message] (html/html-content (apply str message)))
 
+(defsnippet addprofile "../resources/public/addprofile.html"
+  [:div#addprofile]
+  [])
+
 (defroutes app-routes
   (GET "/" request
        (if (session/get :username)
@@ -89,8 +99,21 @@
           pphotos (read-string (apply :photos (db/searchid (str id))))
           pimage (apply :profilephoto (db/searchid (str id)))]
       (indexpage (profilep pnama pumur palamat pkasus pjob porg uuid pphotos pimage) '())))
+  (GET "/addprofile" request
+    (indexpage (addprofile) '()))
+  (POST "/addprofile-action" {params :params}
+    (let [id (uuid)
+          pth (str "resources/public/profiles/" id)]
+      (do
+        (io/create-path pth true)
+        (io/upload-file pth (:profilephoto params))
+        (str params))))
+
   (GET "/session" request
     (str request))
+  (GET "/io" request
+    (str request))
+
   (GET "/logout" []
     (do 
       (session/clear!)

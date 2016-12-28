@@ -1,0 +1,23 @@
+<div id="addprofile" class="container">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<form class="form-addprofile" action="/addprofile-action" method="POST" enctype="multipart/form-data">
+				<div class="ppinput">
+					<h4>Upload Foto Tampilan: </h4>
+					<input type="file" name="profilephoto" accept="image/*">
+				</div>
+				<input type="text" name="name" placeholder="Name" autofocus="">
+				<input type="text" name="age"  placeholder="Umur" required="">
+				<input type="text" name="address" placeholder="Alamat">
+				<input type="text" name="case" placeholder="Kasus">
+				<input type="text" name="job" placeholder="Pekerjaan Saat Ini">
+				<input type="text" name="org" placeholder="Organisasi Yang Diikuti">
+				<div class="psinput">
+					<h4>Upload Foto Lainnya: </h4>
+					<input type="file" name="photos" accept="image/*" multiple>
+				</div>
+				<button class="btn btn-lg btn-black" type="submit">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>

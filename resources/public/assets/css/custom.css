@@ -78,3 +78,15 @@ ul {
 .photost {
 	font-size:24px;
 }
+
+#addprofile {
+	margin-top:100px;
+}
+
+.form-addprofile > *{
+	border-radius: 5px;
+	padding:3px;
+	margin-bottom: 5px;
+	float:left;
+	clear:left;
+}
