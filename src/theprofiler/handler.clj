@@ -14,12 +14,3 @@
        [app-routes]
        :middleware [wrap-params wrap-multipart-params]
        :ring-defaults (assoc-in site-defaults [:security :anti-forgery] false)))
-;
-;(def app
-;  (wrap-defaults app-routes (assoc-in site-defaults [:security :anti-forgery] false)))
-
-;(def app
-;  (-> (routes home/my-routes)
-;      (wrap-params)
-;      (wrap-multipart-params)
-;      (wrap-keyword-params))))

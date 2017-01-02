@@ -15,3 +15,12 @@
 
 (defn searchid [id]
 	(jdbc/query db2 [(str "select * from profiles where uuid = '" id "'")]))
+
+(defn admin? [username]
+	(= 1 (:admin (first (jdbc/query db2 [(str "select admin from users where username = '" username "'")])))))
+
+;UPDATE 
+(defn addprofdb [nm age address cas job org photos profilephoto uuid]
+	(jdbc/insert! db2 :profiles 
+		{:name nm :age age :address address :kasus cas :job job :organisation org :photos photos :profilephoto profilephoto :uuid uuid}))
+

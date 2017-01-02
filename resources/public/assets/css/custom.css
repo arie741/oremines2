@@ -69,6 +69,8 @@ ul {
 
 .pimage {
 	margin-bottom:20px;
+	max-height:260px;
+	max-width:500px;
 }
 
 .profphotos {
@@ -89,4 +91,18 @@ ul {
 	margin-bottom: 5px;
 	float:left;
 	clear:left;
+	width:100%;
+}
+
+.form-addprofile input, .form-addprofile textarea {
+	width:99%;
+}
+
+.form-addprofile label > span {
+	float:right;
+}
+
+.address-i {
+	height:100px;
+	resize:none;
 }

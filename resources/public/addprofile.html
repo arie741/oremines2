@@ -2,21 +2,86 @@
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2">
 			<form class="form-addprofile" action="/addprofile-action" method="POST" enctype="multipart/form-data">
-				<div class="ppinput">
-					<h4>Upload Foto Tampilan: </h4>
-					<input type="file" name="profilephoto" accept="image/*">
+				<div class="form-group">
+					<label for="profilephoto" class="col-lg-4">
+						Foto Profile
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input type="file" name="profilephoto" accept="image/*">
+					</div>
 				</div>
-				<input type="text" name="name" placeholder="Name" autofocus="">
-				<input type="text" name="age"  placeholder="Umur" required="">
-				<input type="text" name="address" placeholder="Alamat">
-				<input type="text" name="case" placeholder="Kasus">
-				<input type="text" name="job" placeholder="Pekerjaan Saat Ini">
-				<input type="text" name="org" placeholder="Organisasi Yang Diikuti">
-				<div class="psinput">
-					<h4>Upload Foto Lainnya: </h4>
-					<input type="file" name="photos" accept="image/*" multiple>
+				<div class="form-group">
+					<label for="name" class="col-lg-4">
+						Nama
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input type="text" name="name" placeholder="Nama" autofocus="">
+					</div>
 				</div>
-				<button class="btn btn-lg btn-black" type="submit">Submit</button>
+				<div class="form-group">
+					<label for="age" class="col-lg-4">
+						Umur
+						<span>:</span>
+					</label>
+					<div class="col-lg-2">
+						<input type="number" name="age"  placeholder="Umur" required="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="col-lg-4">
+						Alamat
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<textarea class="address-i" placeholder="Alamat" name="address" id="" cols="30" rows="10"></textarea>
+					</div>
+					<!--
+					<div class="col-lg-8">
+						<input type="text" name="address" placeholder="Alamat" class="address-i">
+					</div>
+					-->
+				</div>
+				<div class="form-group">
+					<label for="kasus" class="col-lg-4">
+						Kasus
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input type="text" name="kasus" placeholder="Kasus">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="job" class="col-lg-4">
+						Pekerjaan Saat Ini
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input type="text" name="job" placeholder="Pekerjaan Saat Ini">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="org" class="col-lg-4">
+						Organisasi Yang Diikuti
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input type="text" name="org" placeholder="Organisasi Yang Diikuti">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="photos" class="col-lg-4">
+						Foto Lainnya
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input type="file" name="photos" accept="image/*" multiple>
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-lg btn-black" type="submit">Tambah Profile</button>
+				</div>
 			</form>
 		</div>
 	</div>

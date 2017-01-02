@@ -6,11 +6,31 @@
     [hiccup.core :as hc]
     [theprofiler.db :as db]
     [noir.session :as session]
-    [noir.io :as io]))
+    [noir.io :as io]
+    [noir.response :as resp]))
 
 ;;helper functions
 
+(defn validate [page]
+  (if (session/get :username)
+    (if (db/admin? (session/get :username))
+      page
+      page)
+    (loginpage)))
+
 (defn uuid [] (str (java.util.UUID/randomUUID)))
+
+(defn up-file [pth profilephoto] 
+  (if (not (empty? (:filename profilephoto)))
+    (io/upload-file pth profilephoto)
+    nil))
+
+(defn up-file-multiple [pth photos]
+  (if (vector? photos)
+    (doseq [i photos]
+      (io/upload-file pth i))
+    (if (not (empty? (:filename photos)))
+      (io/upload-file pth photos))))
 
 ;;templates
 
@@ -21,15 +41,15 @@
 
 (defsnippet profilet "../resources/public/profilethumb.html"
   [:div.profile-panel]
-  [image pname age case id]
+  [image pname age kasus id]
   [:img.profileimg] (html/set-attr :src image)
   [:span.name] (html/html-content pname)
   [:span.age] (html/html-content age)
-  [:span.case] (html/html-content case)
+  [:span.kasus] (html/html-content kasus)
   [:a.plink] (html/set-attr :href (str "/profile/" id)))
 
 (defn profilepanels [profiles]
-  (map #(profilet (:profilephoto %) (:name %) (:age %) (:case %) (:uuid %)) profiles))
+  (map #(profilet (:profilephoto %) (:name %) (:age %) (:kasus %) (:uuid %)) profiles))
 
 (defn photosimage [vec]
   (apply str (map #(hc/html [:a {:href %}
@@ -73,7 +93,7 @@
 (defroutes app-routes
   (GET "/" request
        (if (session/get :username)
-        (indexpage (searchform) '())
+        (validate (indexpage (searchform) '()))
         (loginpage)))
   (POST "/login-action" {params :params}
     (let [username (:username params)
@@ -92,27 +112,32 @@
     (let [pnama (apply :name (db/searchid (str id)))
           pumur (apply :age (db/searchid (str id)))
           palamat (apply :address (db/searchid (str id)))
-          pkasus (apply :case (db/searchid (str id)))
+          pkasus (apply :kasus (db/searchid (str id)))
           pjob (apply :job (db/searchid (str id)))
           porg (apply :organisation (db/searchid (str id)))
           uuid (apply :uuid (db/searchid (str id)))
           pphotos (read-string (apply :photos (db/searchid (str id))))
           pimage (apply :profilephoto (db/searchid (str id)))]
-      (indexpage (profilep pnama pumur palamat pkasus pjob porg uuid pphotos pimage) '())))
+      (validate (indexpage (profilep pnama pumur palamat pkasus pjob porg uuid pphotos pimage) '()))))
   (GET "/addprofile" request
-    (indexpage (addprofile) '()))
+    (validate (indexpage (addprofile) '())))
   (POST "/addprofile-action" {params :params}
-    (let [id (uuid)
-          pth (str "resources/public/profiles/" id)]
+    (let [qid (uuid)
+          pth (str "resources/public/profiles/" qid)
+          photos (if (vector? (:photos params)) 
+                    (str (mapv #(str "/profiles/" qid "/" (:filename %)) (:photos params)))
+                    (if (empty? (:filename (:photos params)))
+                      "[]"
+                      (str (vector (str "/profiles/" qid "/" (:filename (:photos params)))))))
+          pphoto (if (empty? (:filename (:profilephoto params)))
+                    ""
+                    (str "/profiles/" qid "/" (:filename (:profilephoto params))))]
       (do
         (io/create-path pth true)
-        (io/upload-file pth (:profilephoto params))
-        (str params))))
-
-  (GET "/session" request
-    (str request))
-  (GET "/io" request
-    (str request))
+        (up-file pth (:profilephoto params))
+        (up-file-multiple pth (:photos params))
+        (db/addprofdb (:name params) (Integer/parseInt (:age params)) (:address params) (:kasus params) (:job params) (:org params) photos pphoto qid)
+        (indexpage (addprofile) '()))))
 
   (GET "/logout" []
     (do 
