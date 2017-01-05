@@ -17,6 +17,11 @@ ul {
 	color:#fff;
 }
 
+.btn-delete {
+	background-color: #384452;
+	color:red;
+}
+
 .btn-black:hover {
 	color:#00b3fe;
 }
@@ -26,6 +31,14 @@ ul {
 	text-align: center;
 	background-color: red;
 	color:#000000;
+	border-radius: 10px;
+}
+
+.panel-green {
+	padding:5px;
+	text-align: center;
+	background-color: #49ff74;
+	color:#000;
 	border-radius: 10px;
 }
 
@@ -81,11 +94,11 @@ ul {
 	font-size:24px;
 }
 
-#addprofile {
+#addprofile, #adduser, #userslist, #edituser {
 	margin-top:100px;
 }
 
-.form-addprofile > *{
+.form-addprofile > *, .form-adduser > *{
 	border-radius: 5px;
 	padding:3px;
 	margin-bottom: 5px;
@@ -94,15 +107,23 @@ ul {
 	width:100%;
 }
 
-.form-addprofile input, .form-addprofile textarea {
+.form-addprofile input, .form-addprofile textarea, .form-adduser input, #ultable {
 	width:99%;
 }
 
-.form-addprofile label > span {
+.form-addprofile label > span, .form-adduser label >span {
 	float:right;
 }
 
 .address-i {
 	height:100px;
 	resize:none;
+}
+
+.input-cb * {
+	float:left;
+}
+
+#ultable *{
+	padding:4px;
 }

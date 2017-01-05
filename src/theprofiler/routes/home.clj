@@ -11,13 +11,6 @@
 
 ;;helper functions
 
-(defn validate [page]
-  (if (session/get :username)
-    (if (db/admin? (session/get :username))
-      page
-      page)
-    (loginpage)))
-
 (defn uuid [] (str (java.util.UUID/randomUUID)))
 
 (defn up-file [pth profilephoto] 
@@ -31,6 +24,16 @@
       (io/upload-file pth i))
     (if (not (empty? (:filename photos)))
       (io/upload-file pth photos))))
+
+;;admin template
+
+(defn adminnav []
+  (hc/html [:li {:class "dropdown" :id "adminnav"}
+              [:a {:class "dropdown-toggle" :data-toggle "dropdown" :href "#"} "USERS" 
+                [:b {:class "caret"}]]
+              [:ul {:class "dropdown-menu"}
+                [:li [:a {:href "/userslist"} "USERS LIST"]]
+                [:li [:a {:href "/adduser"} "DAFTAR USER"]]]]))
 
 ;;templates
 
@@ -72,7 +75,9 @@
 (deftemplate indexpage "../resources/public/index.html"
   [snippet & profiles]
   [:div#content] (html/content snippet)
-  [:div#content] (html/append (apply profilepanels profiles)))
+  [:div#content] (html/append (apply profilepanels profiles))
+  [:li#adminnav] (if (db/admin? (session/get :username))
+                    (html/html-content (adminnav))))
 
 (defsnippet login "../resources/public/login.html"
   [:div#headerwrap]
@@ -88,7 +93,54 @@
 
 (defsnippet addprofile "../resources/public/addprofile.html"
   [:div#addprofile]
+  [& message]
+  [:div#mes] (html/html-content (apply str message)))
+
+(defsnippet adduser "../resources/public/adduser.html"
+  [:div#adduser]
+  [& message]
+  [:div#mes] (html/html-content (apply str message)))
+
+(defsnippet trultableh "../resources/public/userslist.html"
+  [:tr#trultableh]
   [])
+
+(defn hctrultable [nuser pw admin]
+  (hc/html [:tr [:td nuser]
+                [:td pw]
+                [:td (if (= admin 1) "Admin" "User")]
+                [:td [:a {:href (str "/edit/" nuser) :class "btn btn-sm btn-black"} "EDIT"]]]))
+
+(defn trmap [dat]
+  (apply str (map #(hctrultable (:username %) (:password %) (:admin %)) dat)))
+
+(defsnippet userslist "../resources/public/userslist.html"
+  [:div#userslist]
+  []
+  [:tr#trultable] (html/substitute "")
+  [:table#ultable] (html/html-content (trmap (db/alluser)))
+  [:table#ultable] (html/prepend (trultableh)))
+
+(defsnippet edituser "../resources/public/edituser.html"
+  [:div#edituser]
+  [nuser & mes]
+  [:form#form-adduser] (html/set-attr :action (str "/edituser-action/" nuser))
+  [:a#deleteuser] (html/set-attr :href (str "/deleteuser/" nuser))
+  [:input#nuser] (html/set-attr :value nuser)
+  [:div#mes] (html/html-content (apply str mes)))
+
+;;validate
+
+(defn validate [page & adminpage]
+  (if (session/get :username)
+    (if (db/admin? (session/get :username))
+      (if (empty? adminpage)
+        page
+        (first adminpage))
+      page)
+    (loginpage)))
+
+;;routes
 
 (defroutes app-routes
   (GET "/" request
@@ -137,8 +189,39 @@
         (up-file pth (:profilephoto params))
         (up-file-multiple pth (:photos params))
         (db/addprofdb (:name params) (Integer/parseInt (:age params)) (:address params) (:kasus params) (:job params) (:org params) photos pphoto qid)
-        (indexpage (addprofile) '()))))
+        (indexpage (addprofile (mes "Profile berhasil tersimpan!" "green")) '()))))
+  (GET "/adduser" []
+    (validate (indexpage (searchform) '()) (indexpage (adduser) '())))
+  (POST "/adduser-action" [nuser pw upw padmin]
+    (if (= upw pw)
+      (if (empty? (db/login-f nuser))
+        (do
+          (db/adduser nuser pw (Integer/parseInt padmin))
+          (indexpage (adduser (mes "User telah terdaftar!" "green")) '()))
+        (indexpage (adduser (mes "User sudah terdaftar sebelumnya." "red")) '()))
+      (indexpage (adduser (mes "Password tidak cocok." "red")) '())))
 
+  (GET "/userslist" []
+    (validate (indexpage (searchform) '()) (indexpage (userslist) '())))
+  (GET "/edit/:nuser" [nuser]
+    (validate (indexpage (searchform) '()) (indexpage (edituser nuser) '())))
+  (POST "/edituser-action/:nuser" [nuser pw upw padmin]
+    (if (and (empty? pw) (empty? upw))
+      (do
+        (db/update-by-user nuser (apply :password (db/login-f nuser)) (Integer/parseInt padmin))
+        (validate (indexpage (searchform) '()) (indexpage (userslist) '())))
+      (if (= pw upw)
+          (do
+            (db/update-by-user nuser pw (Integer/parseInt padmin))
+            (validate (indexpage (searchform) '()) (indexpage (userslist) '())))
+          (validate (indexpage (searchform) '()) 
+                    (indexpage (edituser "arie" (mes "Password tidak sama!" "red")) '())))))
+  (GET "/deleteuser/:nuser" [nuser]
+    (if (db/admin? (session/get :username))
+      (do
+        (db/delete-by-user nuser)
+        (validate (indexpage (searchform) '()) (indexpage (userslist) '())))
+      (validate (indexpage (searchform) '()))))
   (GET "/logout" []
     (do 
       (session/clear!)

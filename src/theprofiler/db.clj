@@ -7,6 +7,9 @@
                   :dbname "theprofiler"
                   :password "admin2016"))
 
+(defn alluser []
+	(jdbc/query db2 [(str "select * from users")]))
+
 (defn login-f [user]
 	(jdbc/query db2 [(str "select * from users where username = '" user "'")]))
 
@@ -24,3 +27,14 @@
 	(jdbc/insert! db2 :profiles 
 		{:name nm :age age :address address :kasus cas :job job :organisation org :photos photos :profilephoto profilephoto :uuid uuid}))
 
+(defn adduser [nuser pw adm]
+	(jdbc/insert! db2 :users
+		{:username nuser :password pw :admin adm}))
+
+(defn update-by-user [nuser pw adm]
+	(jdbc/update! db2 :users
+		{:password pw :admin adm} ["username = ?" nuser]))
+
+;DELETE
+(defn delete-by-user [nuser]
+	(jdbc/delete! db2 :users ["username = ?" nuser]))

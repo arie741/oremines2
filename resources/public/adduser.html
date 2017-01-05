@@ -1,0 +1,55 @@
+<div id="adduser" class="container">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<form id="form-adduser" class="form-adduser" action="/adduser-action" method="POST" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="nuser" class="col-lg-4">
+						User
+						<span>:</span>
+					</label>
+					<div class="col-lg-6">
+						<input type="text" name="nuser" placeholder="User" autofocus="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="pw" class="col-lg-4">
+						Password
+						<span>:</span>
+					</label>
+					<div class="col-lg-6">
+						<input type="password" name="pw"  placeholder="Password" required="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="upw" class="col-lg-4">
+						Ulang Password
+						<span>:</span>
+					</label>
+					<div class="col-lg-6">
+						<input type="password" name="upw"  placeholder="Ulang Password" required="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="padmin" class="col-lg-4">
+						Status
+						<span>:</span>
+					</label>
+					<div class="col-lg-2">
+						<select name="padmin" form="form-adduser">
+							<option value="0">User</option>
+							<option value="1">Admin</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-lg btn-black" type="submit">Daftar User</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<div id="mes"></div>
+		</div>
+	</div>
+</div>
