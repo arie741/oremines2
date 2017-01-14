@@ -31,6 +31,10 @@
 	(jdbc/insert! db2 :users
 		{:username nuser :password pw :admin adm}))
 
+(defn update-by-id [id params]
+	(jdbc/update! db2 :profiles
+		params ["uuid = ?" id]))
+
 (defn update-by-user [nuser pw adm]
 	(jdbc/update! db2 :users
 		{:password pw :admin adm} ["username = ?" nuser]))
@@ -38,3 +42,12 @@
 ;DELETE
 (defn delete-by-user [nuser]
 	(jdbc/delete! db2 :users ["username = ?" nuser]))
+
+(defn delete-prof [uuid]
+	(jdbc/delete! db2 :profiles ["uuid = ?" uuid]))
+
+(defn delete-pht [id pht]
+	(let [photos (read-string (apply :photos (searchid id)))
+		  upht (apply vector (remove #(= (str "/profiles/" id "/" pht) %) photos))]
+		(jdbc/update! db2 :profiles
+			{:photos (str upht)} ["uuid = ?" id])))

@@ -1,9 +1,9 @@
-<div class="profile-panel">
+<div class="profile-panel container">
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2 p-class">
 			<a class="plink" href="#">
 				<span class="col-lg-2">
-					<img src="" alt="" class="profileimg" width="110px" height="160px">
+					<img src="" alt="" class="profileimg" width="110px" height="110px">
 				</span>
 				<span class="col-lg-10 profilet">
 					<span class="name"></span>
@@ -11,6 +11,30 @@
 					<span class="case"></span>
 				</span>
 			</a>
+			
+			<a href="#" class="btn btn-primary btn-sm p-edit-btn">Edit</a>
+
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-danger btn-sm usure-modal-btn" data-toggle="modal" data-target="#myModal">
+			Hapus
+			</button>
+			<!-- Modal -->
+			<div class="modal-usure modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">Yakin?</h4>
+						</div>
+						<div class="modal-body">
+							<div>
+								<a href="#" class="btn btn-primary p-delete-btn">YA</a>
+								<button type="button" class="btn btn-danger" data-dismiss="modal">TIDAK</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -6,15 +6,41 @@ ul {
   list-style-type: none;
 }
 
+#content {
+	min-height: 525px;
+}
+
+img {
+	border:5px solid #384452;
+}
+
 .center {
 	margin-right:auto;
 	margin-left:auto;
 	display:block;
 }
 
+.modal-usure .modal-content > div, .addphoto-modal .modal-content > div {
+	padding:10px;
+	text-align: center;
+}
+
+.modal-usure .modal-header, .addphoto-modal, .addphoto-modal-btn {
+	color:#000;
+}
+
+.p-edit-btn, .usure-modal-btn {
+	float:right;
+	margin-right:5px;
+}
+
 .btn-black {
 	background-color: #384452;
 	color:#fff;
+}
+
+.profilebtns {
+	padding-right:11px; 
 }
 
 .btn-delete {
@@ -43,7 +69,7 @@ ul {
 }
 
 #searchf {
-	margin-top:100px;
+	margin-top:58px;
 	text-align: center;
 }
 
@@ -60,16 +86,18 @@ ul {
 	clear:left;
 }
 
-.profile-panel a {
+.plink {
+	padding-bottom:70px;
 	display: block;
 	color:#ffffff;
 }
 
-.profile-panel a:hover {
+.plink:hover {
 	color:#c9c9c9;
 }
 
 #profile {
+	margin-bottom: 28px;
 	margin-top:100px;
 	border:1px solid #384452;
 	background-color:#384452;
@@ -77,25 +105,52 @@ ul {
 	font-family: 'Raleway', sans-serif;
 	font-weight: 700;
 	border-radius: 5px;
-	padding:10px;
+	padding:30px;
+	box-shadow:5px 5px 5px #000;
+}
+
+.profile-panel .p-class {
+	box-shadow:3px 3px 3px #000;
 }
 
 .pimage {
 	margin-bottom:20px;
 	max-height:260px;
-	max-width:500px;
+	max-width:260px;
+}
+
+.pidentity {
+	font-family: Verdana, Geneva, sans-serif;
 }
 
 .profphotos {
 	margin:10px;
 }
 
+.profileimg, .profphotos {
+	object-fit: cover;
+	width: 110px;
+	height:100px;
+}
+
+#about, #program, #addprofile {
+	background-color: #fff;
+}
+
 .photost {
 	font-size:24px;
 }
 
-#addprofile, #adduser, #userslist, #edituser {
-	margin-top:100px;
+#addprofile, #edituser {
+	margin-top:71px;
+}
+
+#adduser, #userslist, #editprofile, #photodet {
+	margin-top: 150px;
+}
+
+#editprofile {
+	margin-bottom:150px;
 }
 
 .form-addprofile > *, .form-adduser > *{
@@ -127,3 +182,24 @@ ul {
 #ultable *{
 	padding:4px;
 }
+
+/*Checkbox Image
+
+.cbimg > input[type=checkbox] {
+    display:none;
+}
+
+.cbimg > input[type=checkbox] + label {
+    background: #999;
+
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+
+.cbimg > input[type=checkbox]:checked + label {
+    background: #0080FF;
+
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+*/

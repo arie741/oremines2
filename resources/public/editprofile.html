@@ -1,0 +1,126 @@
+<div id="editprofile" class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<a href="#" class="profimghref">
+				<img src="" alt="" class="pimage center">
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<form id="form-adduser" class="form-adduser" action="/editprofile-action" method="POST" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="profilephoto" class="col-lg-4">
+						Ganti Foto Profile (110 X 110 px)
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input id="profilephoto" type="file" name="profilephoto" accept="image/*">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="name" class="col-lg-4">
+						Nama
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input id="name" type="text" name="name" placeholder="Nama" autofocus="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="age" class="col-lg-4">
+						Umur
+						<span>:</span>
+					</label>
+					<div class="col-lg-2">
+						<input id="age" type="number" name="age"  placeholder="Umur" required="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="col-lg-4">
+						Alamat
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<textarea class="address-i" placeholder="Alamat" name="address" id="address" cols="30" rows="10"></textarea>
+					</div>
+					<!--
+					<div class="col-lg-8">
+									<input type="text" name="address" placeholder="Alamat" class="address-i">
+					</div>
+					-->
+				</div>
+				<div class="form-group">
+					<label for="kasus" class="col-lg-4">
+						Kasus
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input id="kasus" type="text" name="kasus" placeholder="Kasus">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="job" class="col-lg-4">
+						Pekerjaan Saat Ini
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input id="job" type="text" name="job" placeholder="Pekerjaan Saat Ini">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="org" class="col-lg-4">
+						Organisasi Yang Diikuti
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input id="org" type="text" name="org" placeholder="Organisasi Yang Diikuti">
+					</div>
+				</div>
+				<!--uuid-->
+				<input id="uuid" type="hidden" name="uuid">
+				<!---->
+				<div class="form-group">
+					<label for="photos" class="col-lg-4">
+						Tambah Foto Lainnya
+						<span>:</span>
+					</label>
+					<div class="col-lg-8">
+						<input type="file" name="photos" accept="image/*" multiple>
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-lg btn-black" type="submit">Edit Profile</button>
+				</div>
+				<br>
+				<br>
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-sm btn-delete" data-toggle="modal" data-target="#myModal">
+				Hapus Profile
+				</button>
+				<!-- Modal -->
+				<div class="modal-usure modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog modal-sm" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Yakin?</h4>
+							</div>
+							<div class="modal-body">
+								<div>
+									<a href="#" class="btn btn-primary p-delete-btn">YA</a>
+									<button type="button" class="btn btn-danger" data-dismiss="modal">TIDAK</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<div id="mes"></div>
+		</div>
+	</div>
+</div>

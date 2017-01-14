@@ -1,12 +1,12 @@
 <div id="profile" class="container">
 	<div class="row">
-		<div class="col-lg-12">
-			<img src="" alt="" class="pimage center">
+		<div class="col-lg-3">
+			<a class="profimghref" href="#">
+				<img src="" alt="" class="pimage">
+			</a>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12 pidentity">
-			<div class="col-lg-2">
+		<div class="col-lg-9 pidentity">
+			<div class="col-lg-4">
 				<ul>
 					<li>Nama </li>
 					<li>Umur </li>
@@ -17,7 +17,7 @@
 					<li>ID </li>
 				</ul>
 			</div>
-			<div class="col-lg-10">
+			<div class="col-lg-8">
 				<ul>
 					<li class="pname">: </li>
 					<li class="pumur">: </li>
@@ -31,9 +31,70 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-12 photost">
-			Photos
+		
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="photost">Foto</div>
+			<div class="photosb">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-defualt btn-md addphoto-modal-btn" data-toggle="modal" data-target="#addphtmodal">
+				Tambah Foto
+				</button>
+				<!-- Modal -->
+				<div class="modal fade addphoto-modal" id="addphtmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog modal-sm" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Tambah Foto</h4>
+							</div>
+							<div class="modal-body">
+								<div>
+									<form id="form-addphoto" action="/addphoto-action" method="POST" enctype="multipart/form-data">
+										<div class="form-group">
+											<div class="col-xs-12">
+												<input type="file" name="photos" accept="image/*" multiple>
+											</div>
+										</div>
+										<br>
+										<br>
+										<div class="form-group">
+											<button class="btn btn-lg btn-black" type="submit">Tambah</button>
+										</div>
+									</form>
+									<!--<button type="button" class="btn btn-danger" data-dismiss="modal">TIDAK</button>-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="col-lg-12 pphotos"></div>
+	</div>
+	<div class="row profilebtns">
+		<a href="#" class="btn btn-primary btn-sm p-edit-btn">Edit</a>
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-danger btn-sm usure-modal-btn" data-toggle="modal" data-target="#myModal">
+		Hapus
+		</button>
+		<!-- Modal -->
+		<div class="modal-usure modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Yakin?</h4>
+					</div>
+					<div class="modal-body">
+						<div>
+							<a href="#" class="btn btn-primary p-delete-btn">YA</a>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">TIDAK</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
