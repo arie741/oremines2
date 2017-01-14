@@ -60,6 +60,11 @@
           true
           (recur (rest i))))))
 
+(defn img-exists? [img]
+  (if (not (empty? img))
+    img
+    "/assets/img/post03.jpg"))
+
 ;;admin template
 
 (defn adminnav []
@@ -91,7 +96,7 @@
   [:a.plink] (html/set-attr :href (str "/profile/" id)))
 
 (defn profilepanels [profiles]
-  (map #(profilet (:profilephoto %) (:name %) (:age %) (:kasus %) (:uuid %)) profiles))
+  (map #(profilet (img-exists? (:profilephoto %)) (:name %) (:age %) (:kasus %) (:uuid %)) profiles))
 
 (defn photosimage [vec]
   (apply str (map #(hc/html [:a {:href (str "/photodet" %)}
@@ -110,7 +115,7 @@
   [:a.profimghref] (html/set-attr :href (str "/photodet" pimage))
   [:div.pphotos] (html/html-content (photosimage photos))
   [:div.photost] (html/append (str "( " (count photos) " )"))
-  [:img.pimage] (html/set-attr :src pimage)
+  [:img.pimage] (html/set-attr :src (img-exists? pimage))
   [:form#form-addphoto] (html/set-attr :action (str "/addphoto-action/" id))
   [:a.p-delete-btn] (html/set-attr :href (str "/deleteprof/" id))
   [:button.usure-modal-btn] (html/set-attr :data-target (str "#modal-" id))
