@@ -41,6 +41,7 @@ img {
 
 .profilebtns {
 	padding-right:11px; 
+	margin-top:30px;
 }
 
 .btn-delete {
@@ -141,11 +142,11 @@ img {
 	font-size:24px;
 }
 
-#addprofile, #edituser {
+#addprofile {
 	margin-top:71px;
 }
 
-#adduser, #userslist, #editprofile, #photodet {
+#adduser, #userslist, #editprofile, #photodet, #edituser, #editsuperuser {
 	margin-top: 150px;
 }
 
@@ -203,3 +204,18 @@ img {
     padding: 0 0 0 0px;
 }
 */
+
+@media screen and (max-width: 480px) {
+    .plink {
+    	padding-bottom:30px;
+    }
+
+    .usure-modal-btn {
+    	margin-top:-30px;
+    	margin-right: 55px;
+    }
+
+    .p-edit-btn {
+    	margin-top:-30px;
+    }
+}

@@ -105,13 +105,13 @@
 (defsnippet profilep "public/profile.html"
   [:div#profile]
   [nama umur alamat kasus job org id photos pimage]
-  [:li.pname] (html/append nama)
-  [:li.pumur] (html/append (str umur))
-  [:li.palamat] (html/append alamat)
-  [:li.pkasus] (html/append kasus)
-  [:li.pjob] (html/append job)
-  [:li.porg] (html/append org)
-  [:li.pid] (html/append (str id))
+  [:div.pname] (html/append nama)
+  [:div.pumur] (html/append (str umur))
+  [:div.palamat] (html/append alamat)
+  [:div.pkasus] (html/append kasus)
+  [:div.pjob] (html/append job)
+  [:div.porg] (html/append org)
+  [:div.pid] (html/append (str id))
   [:a.profimghref] (html/set-attr :href (str "/photodet" pimage))
   [:div.pphotos] (html/html-content (photosimage photos))
   [:div.photost] (html/append (str "( " (count photos) " )"))
@@ -163,7 +163,11 @@
 (defn hctrultable [nuser pw admin]
   (hc/html [:tr [:td nuser]
                 [:td pw]
-                [:td (if (= admin 1) "Admin" "User")]
+                [:td (if (= admin 741)
+                      "Master"
+                      (if (= admin 1) 
+                        "Admin" 
+                        "User"))]
                 [:td [:a {:href (str "/edit/" nuser) :class "btn btn-sm btn-black"} "EDIT"]]]))
 
 (defn trmap [dat]
@@ -181,6 +185,13 @@
   [nuser & mes]
   [:form#form-adduser] (html/set-attr :action (str "/edituser-action/" nuser))
   [:a#deleteuser] (html/set-attr :href (str "/deleteuser/" nuser))
+  [:input#nuser] (html/set-attr :value nuser)
+  [:div#mes] (html/html-content (apply str mes)))
+
+(defsnippet editsuperuser "public/editsuperuser.html"
+  [:div#editsuperuser]
+  [nuser & mes]
+  [:form#form-adduser] (html/set-attr :action (str "/edituser-action/" nuser))
   [:input#nuser] (html/set-attr :value nuser)
   [:div#mes] (html/html-content (apply str mes)))
 
@@ -290,7 +301,10 @@
   (GET "/userslist" []
     (validate (indexpage (searchform) '()) (indexpage (userslist) '())))
   (GET "/edit/:nuser" [nuser]
-    (validate (indexpage (searchform) '()) (indexpage (edituser nuser) '())))
+    (validate (indexpage (searchform) '()) 
+      (if (= 741 (apply :admin (db/login-f nuser)))
+        (indexpage (editsuperuser nuser) '())
+        (indexpage (edituser nuser) '()))))
   (POST "/edituser-action/:nuser" [nuser pw upw padmin]
     (if (and (empty? pw) (empty? upw))
       (do
@@ -366,6 +380,7 @@
         (up-file-multiple (str "resources/public/profiles/" id "/") photos)
         (update-file-multiple (str "resources/public/profiles/" id "/") photos id)
         (resp/redirect (str "/profile/" id)))))
+
   (GET "/logout" []
     (do 
       (session/clear!)
