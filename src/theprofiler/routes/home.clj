@@ -223,6 +223,7 @@
   [:div#photodet]
   [id pht]
   [:img.detphotos] (html/set-attr :src (str "/profiles/" id "/" pht))
+  [:a.ppic-btn] (html/set-attr :href (str "/changeprofpic/" id "/" pht))
   [:a.p-delete-btn] (html/set-attr :href (str "/deletephoto/" id "/" pht)))
 
 ;;validate
@@ -297,7 +298,7 @@
           (validate (indexpage (adduser (mes "User telah terdaftar!" "green")) '())))
         (validate (indexpage (adduser (mes "User sudah terdaftar sebelumnya." "red")) '())))
       (validate (indexpage (adduser (mes "Password tidak cocok." "red")) '()))))
-  
+
   (GET "/userslist" []
     (validate (indexpage (searchform) '()) (indexpage (userslist) '())))
   (GET "/edit/:nuser" [nuser]
@@ -380,6 +381,10 @@
         (up-file-multiple (str "resources/public/profiles/" id "/") photos)
         (update-file-multiple (str "resources/public/profiles/" id "/") photos id)
         (resp/redirect (str "/profile/" id)))))
+  (GET "/changeprofpic/:id/:pht" [id pht]
+    (do
+      (db/update-by-id id {:profilephoto (str "/profiles/" id "/" pht)})
+      (resp/redirect (str "/profile/" id))))
 
   (GET "/logout" []
     (do 
