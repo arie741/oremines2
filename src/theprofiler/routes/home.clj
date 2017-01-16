@@ -297,7 +297,7 @@
           (validate (indexpage (adduser (mes "User telah terdaftar!" "green")) '())))
         (validate (indexpage (adduser (mes "User sudah terdaftar sebelumnya." "red")) '())))
       (validate (indexpage (adduser (mes "Password tidak cocok." "red")) '()))))
-
+  
   (GET "/userslist" []
     (validate (indexpage (searchform) '()) (indexpage (userslist) '())))
   (GET "/edit/:nuser" [nuser]

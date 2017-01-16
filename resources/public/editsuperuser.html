@@ -1,0 +1,45 @@
+<div id="editsuperuser" class="container">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<form id="form-adduser" class="form-adduser" action="/edituser-action" method="POST" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="nuser" class="col-lg-4">
+						User
+						<span>:</span>
+					</label>
+					<div class="col-lg-6">
+						<input id="nuser" type="text" name="nuser" value="User" autofocus="" disabled="disabled">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="pw" class="col-lg-4">
+						Password Baru
+						<span>:</span>
+					</label>
+					<div class="col-lg-6">
+						<input id="pw" type="password" name="pw"  placeholder="Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="upw" class="col-lg-4">
+						Ulang Password Baru
+						<span>:</span>
+					</label>
+					<div class="col-lg-6">
+						<input type="password" name="upw"  placeholder="Ulang Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-lg btn-black" type="submit">Edit User</button>
+				</div>
+				<br>
+				<br>
+			</form>			
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<div id="mes"></div>
+		</div>
+	</div>
+</div>
