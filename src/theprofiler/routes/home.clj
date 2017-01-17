@@ -11,8 +11,15 @@
     [clojure.java.io :as cio]))
 
 ;;Paths
+
+(defn req-ip [ip]
+  (str "http://" ip))
+
+(def my-ip
+  (req-ip db/ip))
+
 (defn s-path [pth]
-  (str db/ip ":4242" pth )) 
+  (str my-ip ":4242" pth )) 
 
 ;;helper functions
 
@@ -66,7 +73,7 @@
 
 (defn img-exists? [img]
   (if (not (empty? img))
-    img
+    (s-path img)
     "/assets/img/post03.jpg"))
 
 ;;admin template
@@ -89,7 +96,7 @@
 (defsnippet profilet "public/profilethumb.html"
   [:div.profile-panel]
   [image pname age kasus id]
-  [:img.profileimg] (html/set-attr :src (s-path image))
+  [:img.profileimg] (html/set-attr :src image)
   [:span.name] (html/html-content pname)
   [:span.age] (html/html-content age)
   [:span.kasus] (html/html-content kasus)
@@ -104,7 +111,7 @@
 
 (defn photosimage [vec]
   (apply str (map #(hc/html [:a {:href (str "/photodet" %)}
-                              [:img {:src % :width "200px" :height "200px" :class "profphotos"}]]) vec)))
+                              [:img {:src (s-path %) :width "200px" :height "200px" :class "profphotos"}]]) vec)))
 
 (defsnippet profilep "public/profile.html"
   [:div#profile]
@@ -202,7 +209,7 @@
 (defsnippet editprofile "public/editprofile.html"
   [:div#editprofile]
   [profpic pname age address kasus job org photos id]
-  [:img.pimage] (html/set-attr :src profpic)
+  [:img.pimage] (html/set-attr :src (s-path profpic))
   [:a.profimghref] (html/set-attr :href (str "/photodet" profpic))
   [:input#name] (html/set-attr :value pname)
   [:input#age] (html/set-attr :value age)
@@ -226,7 +233,7 @@
 (defsnippet photodetpage "public/deletephotos.html"
   [:div#photodet]
   [id pht]
-  [:img.detphotos] (html/set-attr :src (str "/profiles/" id "/" pht))
+  [:img.detphotos] (html/set-attr :src (s-path (str "/profiles/" id "/" pht)))
   [:a.ppic-btn] (html/set-attr :href (str "/changeprofpic/" id "/" pht))
   [:a.p-delete-btn] (html/set-attr :href (str "/deletephoto/" id "/" pht)))
 
