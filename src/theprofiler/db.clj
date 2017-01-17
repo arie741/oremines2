@@ -52,3 +52,7 @@
 		  upht (apply vector (remove #(= (str "/profiles/" id "/" pht) %) photos))]
 		(jdbc/update! db2 :profiles
 			{:photos (str upht)} ["uuid = ?" id])))
+
+;;IP finder
+(import (java.net NetworkInterface))
+(def ip (.getHostAddress (java.net.InetAddress/getLocalHost)))

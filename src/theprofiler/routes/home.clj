@@ -10,6 +10,10 @@
     [noir.response :as resp]
     [clojure.java.io :as cio]))
 
+;;Paths
+(defn s-path [pth]
+  (str db/ip ":4242" pth )) 
+
 ;;helper functions
 
 (defn merge-photo [photos pphoto id]
@@ -85,7 +89,7 @@
 (defsnippet profilet "public/profilethumb.html"
   [:div.profile-panel]
   [image pname age kasus id]
-  [:img.profileimg] (html/set-attr :src image)
+  [:img.profileimg] (html/set-attr :src (s-path image))
   [:span.name] (html/html-content pname)
   [:span.age] (html/html-content age)
   [:span.kasus] (html/html-content kasus)
