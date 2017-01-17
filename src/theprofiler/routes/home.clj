@@ -397,6 +397,12 @@
       (db/update-by-id id {:profilephoto (str "/profiles/" id "/" pht)})
       (resp/redirect (str "/profile/" id))))
 
+  (GET "/change-ip/:ip" [ip]
+    (if (db/admin? (session/get :username))
+      (do
+        (db/change-ip ip)
+        (resp/redirect "/"))))
+
   (GET "/logout" []
     (do 
       (session/clear!)

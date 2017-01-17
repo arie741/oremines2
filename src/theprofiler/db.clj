@@ -53,6 +53,10 @@
 		(jdbc/update! db2 :profiles
 			{:photos (str upht)} ["uuid = ?" id])))
 
-;;IP finder
+;;IP
+(defn change-ip [ip]
+	(jdbc/update! db2 :ip
+		{:address ip} ["address like '%'"]))
+
 (import (java.net NetworkInterface))
 (def ip (.getHostAddress (java.net.InetAddress/getLocalHost)))
