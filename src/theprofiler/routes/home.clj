@@ -11,15 +11,8 @@
     [clojure.java.io :as cio]))
 
 ;;Paths
-
-(defn req-ip [ip]
-  (str "http://" ip))
-
-(def my-ip
-  (req-ip db/ip))
-
 (defn s-path [pth]
-  (str my-ip ":4242" pth )) 
+  (str "http://" (db/get-ip) ":4242" pth )) 
 
 ;;helper functions
 
@@ -402,7 +395,8 @@
       (do
         (db/change-ip ip)
         (resp/redirect "/"))))
-
+  (GET "/get-ip" []
+    (str (db/get-ip)))
   (GET "/logout" []
     (do 
       (session/clear!)

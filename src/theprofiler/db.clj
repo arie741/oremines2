@@ -54,6 +54,9 @@
 			{:photos (str upht)} ["uuid = ?" id])))
 
 ;;IP
+(defn get-ip []
+	(apply :address (jdbc/query db2 ["select * from ip"])))
+
 (defn change-ip [ip]
 	(jdbc/update! db2 :ip
 		{:address ip} ["address like '%'"]))
