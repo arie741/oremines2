@@ -12,7 +12,7 @@
 
 ;;Paths
 (defn s-path [pth]
-  (str "http://" (db/get-ip) ":4242" pth )) 
+  (str "http://" (db/get-ip) ":4422" pth )) 
 
 ;;helper functions
 

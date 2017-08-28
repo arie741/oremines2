@@ -3,9 +3,9 @@
             [clojure.java.jdbc :as jdbc]))
 
 (def db2 (pg/pool :host "localhost:5432"
-                  :user "theprofiler"
-                  :dbname "theprofiler"
-                  :password "admin2016"))
+                  :user "oremines2"
+                  :dbname "oremines2"
+                  :password "admin2017"))
 
 (defn alluser []
 	(jdbc/query db2 [(str "select * from users")]))
