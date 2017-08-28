@@ -1,4 +1,4 @@
-(ns theprofiler.db
+(ns oremines2.db
   (:require [clj-postgresql.core :as pg]
             [clojure.java.jdbc :as jdbc]))
 

@@ -1,9 +1,9 @@
-(ns theprofiler.handler
+(ns oremines2.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [compojure.handler :as handler]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
-            [theprofiler.routes.home :refer :all]
+            [oremines2.routes.home :refer :all]
             [noir.util.middleware :as middleware]
             [noir.session :as session]
             [ring.middleware.params :refer [wrap-params]]

@@ -1,10 +1,10 @@
-(ns theprofiler.routes.home
+(ns oremines2.routes.home
   (:require
     [compojure.core :refer :all]
     [compojure.route :as route]
     [net.cgrand.enlive-html :refer [deftemplate defsnippet] :as html]
     [hiccup.core :as hc]
-    [theprofiler.db :as db]
+    [oremines2.db :as db]
     [noir.session :as session]
     [noir.io :as io]
     [noir.response :as resp]

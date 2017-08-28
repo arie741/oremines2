@@ -1,4 +1,4 @@
-(defproject theprofiler "0.1.0-SNAPSHOT"
+(defproject oremines2 "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
@@ -10,7 +10,7 @@
                  [hiccup "1.0.5"]
                  [lib-noir "0.9.9"]]  
   :plugins [[lein-ring "0.9.7"]]
-  :ring {:handler theprofiler.handler/app
+  :ring {:handler oremines2.handler/app
          :auto-reload? true
          :auto-refresh? true
          :reload-paths ["src/" "resources/"]}
