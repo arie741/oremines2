@@ -24,9 +24,9 @@
 		(= 1 (:admin (first (jdbc/query db2 [(str "select admin from users where username = '" username "'")]))))))
 
 ;UPDATE 
-(defn addprofdb [nm age address cas job org photos profilephoto uuid]
+(defn addprofdb [nm age sex pendidikan jurusan email phone kode keterangan r i a s e c photos profilephoto uuid]
 	(jdbc/insert! db2 :profiles 
-		{:name nm :age age :address address :kasus cas :job job :organisation org :photos photos :profilephoto profilephoto :uuid uuid}))
+		{:name nm :age age :sex sex :pendidikan pendidikan :jurusan jurusan :email email :phone phone :kode kode :keterangan keterangan :r r :i i :a a :s s :e e :c c :photos photos :profilephoto profilephoto :uuid uuid}))
 
 (defn adduser [nuser pw adm]
 	(jdbc/insert! db2 :users

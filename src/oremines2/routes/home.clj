@@ -289,7 +289,7 @@
         (io/create-path pth true)
         (up-file pth (:profilephoto params))
         (up-file-multiple pth (:photos params))
-        (db/addprofdb (:name params) (Integer/parseInt (:age params)) (:address params) (:kasus params) (:job params) (:org params) photos pphoto qid)
+        (db/addprofdb (:name params) (Integer/parseInt (:age params)) (:sex params) (:pendidikan params) (:jurusan params) (:email params) (:phone params) (:kode params) (:keterangan params) (:r params) (:i params) (:a params) (:s params) (:e params) (:c params) photos pphoto qid)
         (merge-photo photos pphoto qid)
         (validate (indexpage (addprofile (mes "Profile berhasil tersimpan!" "green")) '())))))
   (GET "/adduser" []
