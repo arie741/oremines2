@@ -14,7 +14,7 @@
 	(jdbc/query db2 [(str "select * from users where username = '" user "'")]))
 
 (defn searchf [prof]
-	(jdbc/query db2 [(str "select * from profiles where name like '%" prof "%'")]))
+	(jdbc/query db2 [(str "select * from profiles where LOWER(name) like '%" (clojure.string/lower-case prof) "%'")]))
 
 (defn searchid [id]
 	(jdbc/query db2 [(str "select * from profiles where uuid = '" id "'")]))

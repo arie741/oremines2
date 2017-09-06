@@ -71,13 +71,20 @@
 
 ;;admin template
 
-(defn adminnav []
+(defn asnipuser []
   (hc/html [:li {:class "dropdown" :id "adminnav"}
               [:a {:class "dropdown-toggle" :data-toggle "dropdown" :href "#"} "USERS" 
                 [:b {:class "caret"}]]
               [:ul {:class "dropdown-menu"}
                 [:li [:a {:href "/userslist"} "USERS LIST"]]
                 [:li [:a {:href "/adduser"} "DAFTAR USER"]]]]))
+
+(defn asnipip []
+  (hc/html [:li
+              [:a {:href "/change-ip"} "JADIKAN SERVER"]]))
+
+(defn adminnav []
+  (str (asnipip) (asnipuser)))
 
 ;;templates
 
@@ -390,10 +397,10 @@
       (db/update-by-id id {:profilephoto (str "/profiles/" id "/" pht)})
       (resp/redirect (str "/profile/" id))))
 
-  (GET "/change-ip/:ip" [ip]
+  (GET "/change-ip" []
     (if (db/admin? (session/get :username))
       (do
-        (db/change-ip ip)
+        (db/change-ip (db/get-ip))
         (resp/redirect "/"))))
   (GET "/get-ip" []
     (str (db/get-ip)))
