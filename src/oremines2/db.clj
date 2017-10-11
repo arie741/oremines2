@@ -14,7 +14,14 @@
 	(jdbc/query db2 [(str "select * from users where username = '" user "'")]))
 
 (defn searchf [prof]
-	(jdbc/query db2 [(str "select * from profiles where LOWER(name) like '%" (clojure.string/lower-case prof) "%'")]))
+	(let [quer (clojure.string/lower-case prof)]
+		(if (empty? (jdbc/query db2 [(str "select * from profiles where LOWER(name) like '%" quer "%'")]))
+			(if (empty? (jdbc/query db2 [(str "select * from profiles where LOWER(jurusan) like '%" quer "%'")]))
+				(if (empty? (jdbc/query db2 [(str "select * from profiles where LOWER(pendidikan) like '%" quer "%'")]))
+					""
+					(jdbc/query db2 [(str "select * from profiles where LOWER(pendidikan) like '%" quer "%'")]))
+				(jdbc/query db2 [(str "select * from profiles where LOWER(jurusan) like '%" quer "%'")]))
+			(jdbc/query db2 [(str "select * from profiles where LOWER(name) like '%" quer "%'")]))))
 
 (defn searchid [id]
 	(jdbc/query db2 [(str "select * from profiles where uuid = '" id "'")]))

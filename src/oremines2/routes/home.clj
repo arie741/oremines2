@@ -255,8 +255,8 @@
        (if (session/get :username)
         (validate (indexpage (searchform) (db/searchf "")))
         (loginpage)))
-  (GET "/searchq" request
-    (apply str (db/searchf "a")))
+  (GET "/searchq/:asd" [asd]
+    (apply str (db/searchf asd)))
 
   (POST "/login-action" {params :params}
     (let [username (:username params)
