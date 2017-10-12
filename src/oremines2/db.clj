@@ -15,13 +15,29 @@
 
 (defn searchf [prof]
 	(let [quer (clojure.string/lower-case prof)]
-		(if (empty? (jdbc/query db2 [(str "select * from profiles where LOWER(name) like '%" quer "%'")]))
-			(if (empty? (jdbc/query db2 [(str "select * from profiles where LOWER(jurusan) like '%" quer "%'")]))
-				(if (empty? (jdbc/query db2 [(str "select * from profiles where LOWER(pendidikan) like '%" quer "%'")]))
+		(if (empty? (jdbc/query db2 [(str "select * from profiles where LOWER(name) ilike '%" quer "%'")]))
+			(if (empty? (jdbc/query db2 [(str "select * from profiles where LOWER(jurusan) ilike '%" quer "%'")]))
+				(if (empty? (jdbc/query db2 [(str "select * from profiles where LOWER(pendidikan) ilike '%" quer "%'")]))
 					""
-					(jdbc/query db2 [(str "select * from profiles where LOWER(pendidikan) like '%" quer "%'")]))
-				(jdbc/query db2 [(str "select * from profiles where LOWER(jurusan) like '%" quer "%'")]))
-			(jdbc/query db2 [(str "select * from profiles where LOWER(name) like '%" quer "%'")]))))
+					(jdbc/query db2 [(str "select * from profiles where LOWER(pendidikan) ilike '%" quer "%'")]))
+				(jdbc/query db2 [(str "select * from profiles where LOWER(jurusan) ilike '%" quer "%'")]))
+			(jdbc/query db2 [(str "select * from profiles where LOWER(name) ilike '%" quer "%'")]))))
+
+(defn nhelp [nm]
+	(if (empty? nm)
+		"> 0"
+		(str "= " nm)))
+
+(defn adv-search [mquer]
+	(jdbc/query db2 [(str "select * from profiles where 
+							name ilike '" (:name mquer) "%' and 
+							pendidikan ilike '" (:pendidikan mquer) "%' and 
+							jurusan ilike '" (:jurusan mquer) "%' and 
+							email ilike '" (:email mquer) "%' and 
+							keterangan ilike '" (:keterangan mquer) "%' and 
+							sex ilike '" (:sex mquer) "%' and 
+							phone ilike '" (:phone mquer) "%' and 
+							age " (nhelp (:age mquer)))]))
 
 (defn searchid [id]
 	(jdbc/query db2 [(str "select * from profiles where uuid = '" id "'")]))

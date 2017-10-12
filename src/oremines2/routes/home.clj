@@ -269,7 +269,7 @@
         (if (= password (apply :password (db/login-f username)))
               (do 
                 (session/put! :username username)
-                (indexpage (searchform) (db/searchf "")))
+                (resp/redirect "/"))
               (loginpage (mes "Wrong password or the username doesn't exist" "red")))
         (loginpage (mes "Wrong password or the username doesn't exist" "red")))))
   (POST "/search-action" request
@@ -406,7 +406,8 @@
   (GET "/advanced-search" []
     (validate (indexpage (advancedsearch) '())))
   (POST "/asearch-action" {params :params}
-    (str params))
+    (validate (indexpage (searchform) (db/adv-search params))))
+    ;(str params))
   (GET "/change-ip" []
     (if (db/admin? (session/get :username))
       (do
