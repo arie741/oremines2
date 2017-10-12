@@ -237,6 +237,10 @@
   [:a.ppic-btn] (html/set-attr :href (str "/changeprofpic/" id "/" pht))
   [:a.p-delete-btn] (html/set-attr :href (str "/deletephoto/" id "/" pht)))
 
+(defsnippet advancedsearch "public/advancedsearch.html"
+  [:div#advancedsearch]
+  [])
+
 ;;validate
 
 (defn validate [page & adminpage]
@@ -399,7 +403,10 @@
     (do
       (db/update-by-id id {:profilephoto (str "/profiles/" id "/" pht)})
       (resp/redirect (str "/profile/" id))))
-
+  (GET "/advanced-search" []
+    (validate (indexpage (advancedsearch) '())))
+  (POST "/asearch-action" {params :params}
+    (str params))
   (GET "/change-ip" []
     (if (db/admin? (session/get :username))
       (do
