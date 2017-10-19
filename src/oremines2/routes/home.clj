@@ -8,13 +8,31 @@
     [noir.session :as session]
     [noir.io :as io]
     [noir.response :as resp]
-    [clojure.java.io :as cio]))
+    [clojure.java.io :as cio]
+    [dk.ative.docjure.spreadsheet :as cxl]))
 
 ;;Paths
 (defn s-path [pth]
   (str "http://" (db/get-ip) ":4422" pth )) 
 
 ;;helper functions
+
+(defn xlrow [dat]
+  (vector (:name dat) (:age dat) (:sex dat) (:pendidikan dat) (:jurusan dat) (:email dat) (:phone dat) (:kode dat) (:keterangan dat)))
+
+(defn create-xl [nxl]
+  (let [wb (cxl/create-workbook "Price List"
+                          (cons ["Name" "Umur" "Sex" "Pendidikan" "Jurusan" "Email" "Phone" "Kode" "Keterangan"] 
+                                (mapv #(xlrow %) (db/searchf ""))))
+      sheet (cxl/select-sheet "Price List" wb)
+      header-row (first (cxl/row-seq sheet))]
+  (do
+    (cxl/set-row-style! header-row (cxl/create-cell-style! wb 
+                                        {:background :yellow,
+                                        :font {:bold true}
+                                        :border-top :thick
+                                        :border-bottom :thick}))
+    (cxl/save-workbook! (str nxl ".xlsx") wb))))
 
 (defn merge-photo [photos pphoto id]
   (let [nphotos (str (apply vector (distinct (conj (read-string photos) pphoto))))]
@@ -244,6 +262,11 @@
   [:div#advancedsearch]
   [])
 
+(defsnippet upexcell "public/uploadexcell.html"
+  [:div#uploadexcell]
+  [mes]
+  [:div#mes] (html/content (str mes)))
+
 ;;validate
 
 (defn validate [page & adminpage]
@@ -409,11 +432,16 @@
     (do
       (db/update-by-id id {:profilephoto (str "/profiles/" id "/" pht)})
       (resp/redirect (str "/profile/" id))))
+  (GET "/upload-excell" []
+    (validate (indexpage (upexcell "") '())))
+  (POST "/upxl-action" {params :params}
+    (do
+      (create-xl (:filename params))
+      (validate (indexpage (upexcell "File ter-upload") '()))))
   (GET "/advanced-search" []
     (validate (indexpage (advancedsearch) '())))
   (POST "/asearch-action" {params :params}
     (validate (indexpage (searchform) (db/adv-search params))))
-    ;(str params))
   (GET "/change-ip" []
     (if (db/admin? (session/get :username))
       (do
