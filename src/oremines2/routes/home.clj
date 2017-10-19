@@ -95,11 +95,11 @@
 
 (defsnippet profilet "public/profilethumb.html"
   [:div.profile-panel]
-  [image pname age kasus id]
+  [image pname pendidikan jurusan id]
   [:img.profileimg] (html/set-attr :src image)
   [:span.name] (html/html-content pname)
-  [:span.age] (html/html-content age)
-  [:span.kasus] (html/html-content kasus)
+  [:span.age] (html/html-content pendidikan)
+  [:span.kasus] (html/html-content jurusan)
   [:a.p-delete-btn] (html/set-attr :href (str "/deleteprof/" id))
   [:button.usure-modal-btn] (html/set-attr :data-target (str "#modal-" id))
   [:div.modal-usure] (html/set-attr :id (str "modal-" id))
@@ -107,7 +107,7 @@
   [:a.plink] (html/set-attr :href (str "/profile/" id)))
 
 (defn profilepanels [profiles]
-  (map #(profilet (img-exists? (:profilephoto %)) (:name %) (:age %) (:kasus %) (:uuid %)) profiles))
+  (map #(profilet (img-exists? (:profilephoto %)) (:name %) (:pendidikan %) (:jurusan %) (:uuid %)) profiles))
 
 (defn photosimage [vec]
   (apply str (map #(hc/html [:a {:href (str "/photodet" %)}
@@ -115,13 +115,16 @@
 
 (defsnippet profilep "public/profile.html"
   [:div#profile]
-  [nama umur alamat kasus job org id photos pimage]
+  [nama umur sex pendidikan jurusan email phone kode keterangan id photos pimage]
   [:div.pname] (html/append nama)
   [:div.pumur] (html/append (str umur))
-  [:div.palamat] (html/append alamat)
-  [:div.pkasus] (html/append kasus)
-  [:div.pjob] (html/append job)
-  [:div.porg] (html/append org)
+  [:div.psex] (html/append sex)
+  [:div.ppendidikan] (html/append pendidikan)
+  [:div.pjurusan] (html/append jurusan)
+  [:div.pemail] (html/append email)
+  [:div.pphone] (html/append phone)
+  [:div.pkode] (html/append kode)
+  [:div.pketerangan] (html/append keterangan)
   [:div.pid] (html/append (str id))
   [:a.profimghref] (html/set-attr :href (str "/photodet" pimage))
   [:div.pphotos] (html/html-content (photosimage photos))
@@ -278,14 +281,17 @@
   (GET "/profile/:id" [id]
     (let [pnama (apply :name (db/searchid (str id)))
           pumur (apply :age (db/searchid (str id)))
-          palamat (apply :address (db/searchid (str id)))
-          pkasus (apply :kasus (db/searchid (str id)))
-          pjob (apply :job (db/searchid (str id)))
-          porg (apply :organisation (db/searchid (str id)))
+          psex (apply :sex (db/searchid (str id)))
+          ppendidikan (apply :pendidikan (db/searchid (str id)))
+          pjurusan (apply :jurusan (db/searchid (str id)))
+          pemail (apply :email (db/searchid (str id)))
+          pphone (apply :phone (db/searchid (str id)))
+          pkode (apply :kode (db/searchid (str id)))
+          pketerangan (apply :keterangan (db/searchid (str id)))
           uuid (apply :uuid (db/searchid (str id)))
           pphotos (read-string (apply :photos (db/searchid (str id))))
           pimage (apply :profilephoto (db/searchid (str id)))]
-      (validate (indexpage (profilep pnama pumur palamat pkasus pjob porg uuid pphotos pimage) '()))))
+      (validate (indexpage (profilep pnama pumur psex ppendidikan pjurusan pemail pphone pkode pketerangan uuid pphotos pimage) '()))))
   (GET "/addprofile" request
     (validate (indexpage (addprofile) '())))
   (POST "/addprofile-action" {params :params}
